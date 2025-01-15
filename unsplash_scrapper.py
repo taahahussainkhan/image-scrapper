@@ -8,20 +8,16 @@ import requests
 
 
 options = Options()
-options.add_argument("--headless")  # Run in headless mode if necessary
+options.add_argument("--headless") 
 options.add_argument("--disable-gpu")
 
 URL = 'https://unsplash.com/'
 
 try:
-    # Create an instance of Firefox Browser
     driver  = webdriver.Firefox(service = FirefoxService(GeckoDriverManager().install()))
     driver.get(URL)
-    # time.sleep(10)
     
-    
-    
-    # Scrolling
+    time.sleep(10)
     
     height = 0
     for i in range(15):
@@ -29,8 +25,6 @@ try:
         driver.execute_script(f"window.scrollTo(0,{height})")
         time.sleep(1)
     
-    
-    # Get urls of images
     image_tags = driver.find_elements(By.XPATH," //img[@class ='tzC2N fbGdz cnmNG']")
     print("Number of images found: ", len(image_tags))
 
@@ -40,10 +34,8 @@ try:
     for url in image_urls:
         print(url)
 
-
 except Exception as e:
     print("An error has occured", e)
-    
     
 finally:
     try:
@@ -53,8 +45,6 @@ finally:
             with open(f'image-{index+1}.jpg', 'wb') as file:
                 for chunk in response.iter_content(chunk_size=128):
                     file.write(chunk)
-        
-        
         
         
     except Exception as error:
